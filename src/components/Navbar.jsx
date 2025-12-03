@@ -80,7 +80,7 @@ const Navbar = () => {
                                 key={link.name}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
-                                className="text-white text-2xl md:text-3xl font-bold hover:text-gold-500 transition-all duration-300 hover:scale-110"
+                                className="text-white text-lg md:text-xl font-bold hover:text-gold-500 transition-all duration-300 hover:scale-110"
                             >
                                 {link.name}
                             </a>
@@ -90,7 +90,7 @@ const Navbar = () => {
                                 setIsOpen(false);
                                 setIsModalOpen(true);
                             }}
-                            className="bg-gradient-to-r from-gold-500 to-gold-600 text-black font-bold py-4 px-12 rounded-full text-xl mt-6 hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                            className="bg-gradient-to-r from-gold-500 to-gold-600 text-black font-bold py-3 px-8 rounded-full text-lg mt-6 hover:shadow-2xl hover:scale-105 transition-all duration-300"
                         >
                             ابدأ الآن
                         </button>
