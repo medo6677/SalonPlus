@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheck, FaRocket, FaStar, FaCrown, FaGift } from 'react-icons/fa';
-import WhatsAppModal from './WhatsAppModal';
+
+const WhatsAppModal = lazy(() => import('./WhatsAppModal'));
 
 const Pricing = ({ onSubscribeClick }) => {
     const [selectedPlan, setSelectedPlan] = React.useState(null);
@@ -275,14 +276,18 @@ const Pricing = ({ onSubscribeClick }) => {
             </div>
 
             {/* WhatsApp Modal with Plan Details */}
-            <WhatsAppModal
-                isOpen={isModalOpen}
-                onClose={() => {
-                    setIsModalOpen(false);
-                    setSelectedPlan(null);
-                }}
-                planDetails={selectedPlan}
-            />
+            <Suspense fallback={null}>
+                {isModalOpen && (
+                    <WhatsAppModal
+                        isOpen={isModalOpen}
+                        onClose={() => {
+                            setIsModalOpen(false);
+                            setSelectedPlan(null);
+                        }}
+                        planDetails={selectedPlan}
+                    />
+                )}
+            </Suspense>
         </section>
     );
 };

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlay, FaChartLine, FaUsers, FaCut } from 'react-icons/fa';
 import heroBg from '../assets/hero-bg.png';
-import WhatsAppModal from './WhatsAppModal';
-import VideoModal from './VideoModal';
+
+// Lazy load modals
+const WhatsAppModal = lazy(() => import('./WhatsAppModal'));
+const VideoModal = lazy(() => import('./VideoModal'));
 
 const Hero = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +19,7 @@ const Hero = () => {
                     src={heroBg}
                     alt="Barbershop Background"
                     className="w-full h-full object-cover scale-105"
+                    fetchPriority="high" // Prioritize loading this image
                 />
             </div>
 
@@ -97,14 +100,20 @@ const Hero = () => {
             </motion.div>
 
             {/* WhatsApp Modal */}
-            <WhatsAppModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <Suspense fallback={null}>
+                {isModalOpen && <WhatsAppModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+            </Suspense>
 
             {/* Video Modal */}
-            <VideoModal
-                isOpen={isVideoOpen}
-                onClose={() => setIsVideoOpen(false)}
-                videoUrl="" // هنا حط لينك الفيديو بتاعك لما يبقى جاهز
-            />
+            <Suspense fallback={null}>
+                {isVideoOpen && (
+                    <VideoModal
+                        isOpen={isVideoOpen}
+                        onClose={() => setIsVideoOpen(false)}
+                        videoUrl="" // هنا حط لينك الفيديو بتاعك لما يبقى جاهز
+                    />
+                )}
+            </Suspense>
         </section>
     );
 };

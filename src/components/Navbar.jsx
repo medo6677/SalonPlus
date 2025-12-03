@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import WhatsAppModal from './WhatsAppModal';
+
+const WhatsAppModal = lazy(() => import('./WhatsAppModal'));
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -99,7 +100,9 @@ const Navbar = () => {
             )}
 
             {/* WhatsApp Modal */}
-            <WhatsAppModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <Suspense fallback={null}>
+                {isModalOpen && <WhatsAppModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+            </Suspense>
         </>
     );
 };
